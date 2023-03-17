@@ -11,6 +11,8 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.vue ."
   },
   "dependencies": {
+    "@splinetool/react-spline": "^2.2.6",
+    "@splinetool/runtime": "^0.9.265",
     "modern-normalize": "^1.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
