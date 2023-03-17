@@ -1,0 +1,13 @@
+@import "../node_modules/modern-normalize/modern-normalize.css";
+:root {
+  --color-b5: #0836c1;
+  --color-b4: #1d63dc;
+  --color-b3: #2f7ae5;
+  --color-b2: #3e88ef;
+  --color-b1: #439cef;
+  --just-white: #e9e9e9;
+}
+#root {
+  display: flex;
+  height: 100vh;
+}
