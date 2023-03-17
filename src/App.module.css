@@ -34,7 +34,6 @@
   align-items: center;
   width: calc(100% - 260px);
   justify-content: center;
-  background: rgb(0, 0, 0);
   background: linear-gradient(
     0deg,
     rgba(0, 0, 0, 0.23431379387692575) 0%,
@@ -54,6 +53,8 @@
     rgba(62, 136, 239, 1) 0%,
     rgba(67, 156, 239, 1) 100%
   );
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0.174) 0px 0px 15px 0px;
 }
 .input-bar textarea {
   all: unset;
