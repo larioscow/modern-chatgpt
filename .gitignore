@@ -28,3 +28,11 @@ dist-ssr
 .eslintrc.cjs
 .prettierrc
 .prettierignore
+package-lock.json
+package.json
+src/assets/bot.png
+src/assets/send.svg
+src/assets/user.png
+src/assets/send.svg
+package.json
+package-lock.json
