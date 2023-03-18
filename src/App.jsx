@@ -5,14 +5,23 @@ import BotMsg from './components/bot-msg';
 
 function App() {
 	const [input, setInput] = useState('');
-	const [chatLog, setChatLog] = useState([
-		{ response: 'Hello, I am a bot. How can I help you today?' },
-	]);
+	const [chatLog, setChatLog] = useState([]);
 
 	async function handleSubmit(e) {
 		e.preventDefault();
 		setChatLog([...chatLog, { message: input }]);
 		setInput('');
+		const response = await fetch('http://localhost:3000/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				message: chatLog.map(item => item.message || item.response).join(''),
+			}),
+		});
+		const data = await response.json();
+		setChatLog([...chatLog, { response: data.message }]);
 	}
 	const handleKeyDown = e => {
 		if (e.keyCode === 13 && !e.shiftKey) {
@@ -22,22 +31,20 @@ function App() {
 	};
 	return (
 		<>
-			<nav className={styles['chat-menu']} tabIndex='1'>
-				<button className={styles['new-button']} tabIndex='2'>
+			<nav className={styles['chat-menu']}>
+				<button className={styles['new-button']}>
 					<img src='src/assets/plus.svg' alt='' />
 					New Chat
 				</button>
 			</nav>
 			<section className={styles.chatbox}>
 				<div className={styles['chat-log']}>
-					{chatLog.map(msg => {
+					{chatLog.map((msg, i) => {
 						if (Object.keys(msg)[0] === 'message') {
-							return <UserMsg msg={msg.message} key={Math.random()}></UserMsg>;
+							return <UserMsg msg={msg.message} key={i}></UserMsg>;
 						}
 						if (Object.keys(msg)[0] === 'response') {
-							return (
-								<BotMsg response={msg.response} key={Math.random()}></BotMsg>
-							);
+							return <BotMsg response={msg.response} key={i}></BotMsg>;
 						} else {
 							return null;
 						}

@@ -65,6 +65,9 @@
 .input-bar button {
 	all: unset;
 	cursor: pointer;
+	display: flex;
+	align-items: center;
+	padding-top: 1px;
 }
 .input-bar img {
 	margin: 0 9px;
