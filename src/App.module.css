@@ -43,7 +43,7 @@
 .input-bar {
 	display: flex;
 	justify-content: space-between;
-	height: 50px;
+	min-height: 50px;
 	width: 730px;
 	padding: 12px 0px 12px 16px;
 	border-radius: 0.375rem;
@@ -62,9 +62,13 @@
 	line-height: 26px;
 	color: white;
 }
+.input-bar button {
+	all: unset;
+	cursor: pointer;
+}
 .input-bar img {
 	margin: 0 9px;
-	transform: scale(90%);
+	transform: scale(95%);
 	filter: invert(100%);
 }
 

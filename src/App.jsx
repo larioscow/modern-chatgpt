@@ -1,14 +1,25 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import styles from './App.module.css';
 import UserMsg from './components/user-msg';
-import pfp from './assets/user-circle.svg';
 import BotMsg from './components/bot-msg';
 
-const msg =
-	'Hello, do a task for me. I want you to go to the store and buy me some milk.';
-const response = "Sorry I cann't do that. Im just a bot.";
-
 function App() {
+	const [input, setInput] = useState('');
+	const [chatLog, setChatLog] = useState([
+		{ response: 'Hello, I am a bot. How can I help you today?' },
+	]);
+
+	async function handleSubmit(e) {
+		e.preventDefault();
+		setChatLog([...chatLog, { message: input }]);
+		setInput('');
+	}
+	const handleKeyDown = e => {
+		if (e.keyCode === 13 && !e.shiftKey) {
+			e.preventDefault();
+			handleSubmit(e);
+		}
+	};
 	return (
 		<>
 			<nav className={styles['chat-menu']} tabIndex='1'>
@@ -19,18 +30,37 @@ function App() {
 			</nav>
 			<section className={styles.chatbox}>
 				<div className={styles['chat-log']}>
-					<UserMsg msg={msg} pfp={pfp}></UserMsg>
-					<BotMsg response={response}></BotMsg>
+					{chatLog.map(msg => {
+						if (Object.keys(msg)[0] === 'message') {
+							return <UserMsg msg={msg.message} key={Math.random()}></UserMsg>;
+						}
+						if (Object.keys(msg)[0] === 'response') {
+							return (
+								<BotMsg response={msg.response} key={Math.random()}></BotMsg>
+							);
+						} else {
+							return null;
+						}
+					})}
 				</div>
 				<div className={styles['input-zone']}>
-					<div className={styles['input-bar']}>
-						<textarea rows='1'></textarea>
-						<img src='./src/assets/send.svg' alt='' />
-					</div>
+					<form onSubmit={handleSubmit}>
+						<div className={styles['input-bar']}>
+							<textarea
+								rows={1}
+								cols={20}
+								onKeyDown={handleKeyDown}
+								value={input}
+								onChange={e => setInput(e.target.value)}
+							></textarea>
+							<button type='submit'>
+								<img src='./src/assets/send.svg' alt='send' />
+							</button>
+						</div>
+					</form>
 				</div>
 			</section>
 		</>
 	);
 }
-
 export default App;
