@@ -1,5 +1,5 @@
 .chat-menu {
-	width: 260px;
+	min-width: 260px;
 	height: 100vh;
 	padding: 0.5rem;
 	background: var(--color-b3);
@@ -25,6 +25,8 @@
 .chatbox {
 	flex: 1;
 	background: var(--just-white);
+	width: calc(100% - 260px);
+	overflow-y: scroll;
 }
 .input-zone {
 	position: absolute;
@@ -75,5 +77,30 @@
 	filter: invert(100%);
 }
 
-@media (max-width: 768px) {
+/* media at 1024 px for form inside .input-zone*/
+@media screen and (max-width: 1024px) {
+	.input-zone form {
+		width: 95%;
+	}
+	.input-bar {
+		width: 100%;
+	}
+}
+/* media at 780px for the menu to desapear */
+@media screen and (max-width: 780px) {
+	.chat-menu {
+		display: none;
+	}
+	.input-zone {
+		width: 100%;
+	}
+	.input-zone {
+		height: auto;
+		padding: 15px 0 15px;
+		background: var(--just-white);
+	}
+	.input-bar {
+		min-height: 25px;
+		padding: 6px 0px 6px 8px;
+	}
 }
