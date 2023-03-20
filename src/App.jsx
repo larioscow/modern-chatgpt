@@ -1,27 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './App.module.css';
 import UserMsg from './components/user-msg';
 import BotMsg from './components/bot-msg';
 
 function App() {
+	useEffect(() => {
+		getEngines();
+	}, []);
+
 	const [input, setInput] = useState('');
+	const [models, setModels] = useState([]);
+	const [currentModel, setCurrentModel] = useState('ada');
 	const [chatLog, setChatLog] = useState([]);
 
 	async function handleSubmit(e) {
 		e.preventDefault();
-		setChatLog([...chatLog, { message: input }]);
+
+		const chatLogNew = [...chatLog, { message: input }];
 		setInput('');
+		setChatLog(chatLogNew);
+
+		const messages = chatLogNew
+			.map(message => message.message || message.response)
+			.join('\n');
+
 		const response = await fetch('http://localhost:3000/', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				message: chatLog.map(item => item.message || item.response).join(''),
+				message: messages,
+				currentModel,
 			}),
 		});
+
 		const data = await response.json();
-		setChatLog([...chatLog, { response: data.message }]);
+		setChatLog([...chatLogNew, { response: data.message }]);
 	}
 	const handleKeyDown = e => {
 		if (e.keyCode === 13 && !e.shiftKey) {
@@ -29,13 +44,36 @@ function App() {
 			handleSubmit(e);
 		}
 	};
+	const clearChat = () => {
+		setChatLog([]);
+	};
+	function getEngines() {
+		fetch('http://localhost:3000/models')
+			.then(res => res.json())
+			.then(data => setModels(data.models));
+	}
 	return (
 		<>
 			<nav className={styles['chat-menu']}>
-				<button className={styles['new-button']}>
+				<button className={styles['new-button']} onClick={clearChat}>
 					<img src='src/assets/plus.svg' alt='' />
 					New Chat
 				</button>
+				<div className={styles['model-select']}>
+					<select
+						onChange={e => {
+							setCurrentModel(e.target.value);
+						}}
+					>
+						{models.map((model, i) => {
+							return (
+								<option key={model.id} value={model.id}>
+									{model.id}
+								</option>
+							);
+						})}
+					</select>
+				</div>
 			</nav>
 			<section className={styles.chatbox}>
 				<div className={styles['chat-log']}>
@@ -49,6 +87,7 @@ function App() {
 							return null;
 						}
 					})}
+					<div className={styles.space}></div>
 				</div>
 				<div className={styles['input-zone']}>
 					<form onSubmit={handleSubmit}>
