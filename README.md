@@ -4,7 +4,9 @@ Modern ChatGPT is a user-friendly web application built using React that allows 
 
 > :warning: **Expect bugs**: This project is under active development and may contain bugs!
 
-![Modern ChatGPT Screenshot](./screenshot.png)
+<a href="https://moden-chat-gpt.netlify.app/" target="_blank" rel="noopener noreferrer">![Modern ChatGPT Screenshot](./screenshot.png)<a/>
+
+Click up here 👆
 
 ## Table of Contents
 
