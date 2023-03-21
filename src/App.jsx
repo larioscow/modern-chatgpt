@@ -11,7 +11,7 @@ function App() {
 		e.preventDefault();
 		setChatLog([...chatLog, { message: input }]);
 		setInput('');
-		const response = await fetch('http://localhost:3000/', {
+		const response = await fetch('http://localhost:3080/', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
